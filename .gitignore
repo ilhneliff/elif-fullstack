@@ -1,0 +1,15 @@
+# bağımlılıklar
+node_modules/
+
+# ortam değişkenleri — ASLA commit etme
+.env
+.env.*
+
+# derleme çıktıları
+dist/
+build/
+.next/
+
+# sistem
+.DS_Store
+*.log
