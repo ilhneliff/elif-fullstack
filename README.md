@@ -15,7 +15,7 @@ Web fullstack = iş motoru, embedded = fark yaratan hikaye (IoT capstone 🔌).
 
 ```bash
 # 1) Repoyu bir kez bilgisayarına çek
-git clone <repo-linkin> elif-fullstack
+git clone https://github.com/ilhneliff/elif-fullstack.git
 cd elif-fullstack
 
 # 2) O haftanın klasöründe çalış (örn. hafta-01)
@@ -35,10 +35,16 @@ git push
 
 ```
 elif-fullstack/
-├── README.md          ← buradasın: yol haritası + kullanım
-├── hafta-01/ ... hafta-16/   ← her haftanın çalışması
-└── projeler/          ← büyük projeler (React app, IoT dashboard...)
+├── README.md            ← buradasın: kullanım + özet
+├── yol-haritasi.html    ← görsel harita (tarayıcıda aç, offline çalışır)
+├── CLAUDE.md            ← bilgisayarındaki Claude'u koça çevirir
+├── hafta-01/
+│   └── README.md        ← o haftanın gün-gün, saat-saat detayı + kod
+├── hafta-02/ ... hafta-16/   ← aynı şekilde her hafta
+└── projeler/            ← büyük projeler (React app, IoT dashboard...)
 ```
+
+**Her `hafta-XX/README.md` o haftanın tam planı** — saat-saat bloklar, kavram anlatımı ve gerçek kod içinde. Dışarı "araştır" diye göndermez; ders dosyanın içinde.
 
 ## 16 haftalık harita (özet)
 
@@ -53,6 +59,10 @@ elif-fullstack/
 | 14–16 | 5 | Portföy, mülakat, başvuru | ✔ başvuruya hazır aday |
 
 **Stack:** JavaScript → TypeScript · React · Node/Express · PostgreSQL/Prisma · Vercel/Railway · ESP32 (embedded)
+
+## Bilgisayarında Claude (koç)
+
+Bu repoda bir `CLAUDE.md` var. **Claude Code'u bu klasörde açtığında**, Claude senin kişisel kodlama koçun olur: hangi haftada olduğunu bilir, cevabı doğrudan vermez (öğretir), Türkçe konuşur, takıldığında adım adım götürür. Takıldığın an hata mesajını yapıştır, birlikte çözersiniz.
 
 ## Kaybolmama kuralları
 

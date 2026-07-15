@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>Sıfırdan Fullstack — Yol Haritası</title>
+<style>
+  :root{
+    --bg:#eef1f7;--surface:#ffffff;--surface-2:#e7ecf4;--ink:#0f1826;--ink-soft:#41506a;--muted:#6a778c;
+    --border:#d6dde8;--border-strong:#c2cddd;
+    --accent:#0b8f80;--accent-ink:#076b60;--accent-soft:rgba(11,143,128,.10);
+    --accent-2:#bc5a25;--accent-2-ink:#9c4718;--accent-2-soft:rgba(188,90,37,.10);
+    --ok:#1f8b4c;--warn:#b7791f;
+    --shadow:0 1px 2px rgba(15,24,38,.06),0 8px 24px rgba(15,24,38,.06);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Menlo","Cascadia Code",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Helvetica Neue",sans-serif;
+    --maxw:1060px;--spine:70ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0a0f18;--surface:#111a27;--surface-2:#16202f;--ink:#e7edf6;--ink-soft:#a6b4c8;--muted:#6f8098;
+      --border:#22303f;--border-strong:#2c3d50;
+      --accent:#2fd6c6;--accent-ink:#5fe3d6;--accent-soft:rgba(47,214,198,.12);
+      --accent-2:#f0a35e;--accent-2-ink:#f6b877;--accent-2-soft:rgba(240,163,94,.13);
+      --ok:#4ade80;--warn:#e6b450;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.36);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#eef1f7;--surface:#ffffff;--surface-2:#e7ecf4;--ink:#0f1826;--ink-soft:#41506a;--muted:#6a778c;
+    --border:#d6dde8;--border-strong:#c2cddd;--accent:#0b8f80;--accent-ink:#076b60;--accent-soft:rgba(11,143,128,.10);
+    --accent-2:#bc5a25;--accent-2-ink:#9c4718;--accent-2-soft:rgba(188,90,37,.10);--ok:#1f8b4c;--warn:#b7791f;
+    --shadow:0 1px 2px rgba(15,24,38,.06),0 8px 24px rgba(15,24,38,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a0f18;--surface:#111a27;--surface-2:#16202f;--ink:#e7edf6;--ink-soft:#a6b4c8;--muted:#6f8098;
+    --border:#22303f;--border-strong:#2c3d50;--accent:#2fd6c6;--accent-ink:#5fe3d6;--accent-soft:rgba(47,214,198,.12);
+    --accent-2:#f0a35e;--accent-2-ink:#f6b877;--accent-2-soft:rgba(240,163,94,.13);--ok:#4ade80;--warn:#e6b450;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.36);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:1.02rem;line-height:1.62;-webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+    background-size:44px 44px;background-position:center top;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(120% 80% at 50% -10%,transparent 40%,var(--bg) 78%);}
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 20px 96px}
+  .spine{max-width:var(--spine)}
+
+  a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid var(--accent-soft)}
+  a:hover{border-bottom-color:var(--accent)}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+  h1,h2,h3,h4,h5{font-family:var(--mono);font-weight:650;line-height:1.15;text-wrap:balance;letter-spacing:-.01em}
+  h2{font-size:clamp(1.4rem,1rem+1.6vw,1.9rem);margin:0 0 .2em}
+  h3{font-size:1.18rem;margin:0 0 .35em}
+  h4{font-size:1rem;margin:0 0 .3em}
+  p{margin:0 0 1em}
+  .lede{font-size:1.1rem;color:var(--ink-soft)}
+  strong{color:var(--ink);font-weight:650}
+  .accent{color:var(--accent-ink)}
+  .accent2{color:var(--accent-2-ink)}
+  code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);border:1px solid var(--border);
+    padding:.08em .4em;border-radius:5px;color:var(--ink)}
+  ul,ol{margin:0 0 1em;padding-left:1.25em}
+  li{margin:.25em 0}
+
+  header.hero{padding:64px 0 30px}
+  .eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    display:flex;align-items:center;gap:10px;margin-bottom:20px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
+  .term-window{background:var(--surface);border:1px solid var(--border-strong);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;max-width:760px}
+  .term-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+  .term-bar .dot{width:11px;height:11px;border-radius:50%;background:var(--border-strong)}
+  .term-bar .title{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-left:8px}
+  .term-body{padding:22px 22px 26px}
+  h1{font-size:clamp(1.9rem,1.2rem+3.4vw,3rem);margin:.1em 0 .1em}
+  .prompt{font-family:var(--mono);font-size:.9rem;color:var(--accent-ink)}
+  .cursor{display:inline-block;width:.6ch;height:1.05em;background:var(--accent);vertical-align:-.15em;margin-left:2px}
+  @media (prefers-reduced-motion:no-preference){.cursor{animation:blink 1.1s steps(1) infinite}}
+  @keyframes blink{50%{opacity:0}}
+  .who{color:var(--ink-soft);margin-top:12px;max-width:60ch}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-family:var(--mono);font-size:.76rem;letter-spacing:.02em;padding:6px 11px;border-radius:999px;
+    border:1px solid var(--border-strong);background:var(--surface);color:var(--ink-soft);display:inline-flex;gap:7px;align-items:center}
+  .chip b{color:var(--ink);font-weight:650}
+  .chip.web::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .chip.emb::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent-2)}
+
+  nav.jump{position:sticky;top:0;z-index:20;margin:26px 0 8px;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(8px);
+    border:1px solid var(--border);border-radius:12px;padding:8px;display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  nav.jump a{font-family:var(--mono);font-size:.8rem;white-space:nowrap;padding:6px 11px;border-radius:8px;border-bottom:none;color:var(--ink-soft)}
+  nav.jump a:hover{background:var(--surface-2);color:var(--ink)}
+
+  section{padding:44px 0 8px;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;border-top:1px solid var(--border);padding-top:26px}
+  .sec-num{font-family:var(--mono);font-size:.82rem;color:var(--accent-ink);font-weight:650}
+  .sec-head p{margin:6px 0 0}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+
+  .callout{border:1px solid var(--border-strong);border-left:3px solid var(--accent);background:var(--surface);
+    border-radius:10px;padding:16px 18px;margin:18px 0}
+  .callout.warn{border-left-color:var(--accent-2)}
+  .callout .k{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  .callout p{margin:0}
+
+  .diagram{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:18px 0;box-shadow:var(--shadow);overflow-x:auto}
+  .dg-cap{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+
+  .cs{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;min-width:560px}
+  .cs .node{background:var(--surface-2);border:1px solid var(--border-strong);border-radius:11px;padding:16px 16px 18px}
+  .cs .node.client{border-top:3px solid var(--accent)}
+  .cs .node.server{border-top:3px solid var(--accent-2)}
+  .cs .node .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+  .cs .node.client .tag{color:var(--accent-ink)}
+  .cs .node.server .tag{color:var(--accent-2-ink)}
+  .cs .node h4{margin:.1em 0 .5em;font-size:1.05rem}
+  .cs .node ul{margin:0;padding-left:1.05em;font-size:.9rem;color:var(--ink-soft)}
+  .cs .pipe{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:0 12px;min-width:150px}
+  .wire{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center}
+  .wire .line{display:flex;align-items:center;gap:6px;justify-content:center;color:var(--accent-ink)}
+  .wire.back .line{color:var(--accent-2-ink)}
+
+  .stackflow{display:flex;flex-direction:column;gap:0;min-width:520px}
+  .layer{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;padding:14px 0}
+  .layer + .layer{border-top:1px dashed var(--border-strong)}
+  .layer .badge{font-family:var(--mono);font-size:.82rem;font-weight:650;padding:9px 12px;border-radius:9px;text-align:center;border:1px solid var(--border-strong)}
+  .badge.fe{background:var(--accent-soft);color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent) 40%,var(--border))}
+  .badge.be{background:var(--accent-2-soft);color:var(--accent-2-ink);border-color:color-mix(in srgb,var(--accent-2) 40%,var(--border))}
+  .badge.neutral{background:var(--surface-2);color:var(--ink-soft)}
+  .layer .desc{font-size:.94rem;color:var(--ink-soft)}
+  .layer .desc b{color:var(--ink)}
+
+  .signal{display:flex;align-items:stretch;gap:0;min-width:720px}
+  .signal .snode{flex:1;background:var(--surface-2);border:1px solid var(--border-strong);border-radius:11px;padding:14px 12px;text-align:center;min-width:104px}
+  .signal .snode.emb{border-top:3px solid var(--accent-2)}
+  .signal .snode.web{border-top:3px solid var(--accent)}
+  .signal .snode .ic{font-size:1.5rem;line-height:1;margin-bottom:8px}
+  .signal .snode .nm{font-family:var(--mono);font-size:.82rem;font-weight:650;color:var(--ink)}
+  .signal .snode .sub{font-size:.76rem;color:var(--muted);margin-top:3px}
+  .signal .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6px;min-width:60px}
+  .signal .arrow .lbl{font-family:var(--mono);font-size:.66rem;color:var(--muted);margin-bottom:4px;white-space:nowrap}
+  .arrow svg{color:var(--accent)}
+  .arrow.a2 svg{color:var(--accent-2)}
+  @media (prefers-reduced-motion:no-preference){.arrow svg .pulse{animation:dash 1.4s linear infinite}}
+  @keyframes dash{to{stroke-dashoffset:-14}}
+
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
+  .stk{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:15px 16px;box-shadow:var(--shadow)}
+  .stk .role{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .stk .pick{font-family:var(--mono);font-size:1.05rem;font-weight:650;margin:4px 0 6px;color:var(--ink)}
+  .stk .why{font-size:.86rem;color:var(--ink-soft);margin:0}
+  .stk.web{border-top:3px solid var(--accent)}
+  .stk.be{border-top:3px solid var(--accent-2)}
+  .stk.tool{border-top:3px solid var(--border-strong)}
+
+  .timeline{display:flex;flex-direction:column;gap:0;margin-top:8px}
+  .phase{display:grid;grid-template-columns:64px 1fr;gap:0;position:relative}
+  .phase .rail{position:relative;display:flex;justify-content:center}
+  .phase .rail::before{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--border-strong)}
+  .phase:first-child .rail::before{top:26px}
+  .phase:last-child .rail::before{bottom:calc(100% - 26px)}
+  .phase .dot{position:relative;z-index:2;width:15px;height:15px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);margin-top:20px}
+  .phase.emb .dot{border-color:var(--accent-2)}
+  .phase .body{padding:14px 0 22px 6px}
+  .phase .wk{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--muted)}
+  .phase h3{margin:2px 0 .3em}
+  .phase .goal{font-size:.94rem;color:var(--ink-soft);margin:0 0 8px}
+  .deliver{display:inline-flex;gap:7px;align-items:center;font-size:.82rem;font-family:var(--mono);
+    background:var(--accent-soft);color:var(--accent-ink);border-radius:7px;padding:5px 10px}
+  .phase.emb .deliver{background:var(--accent-2-soft);color:var(--accent-2-ink)}
+
+  .termgroups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .tg{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:15px 16px}
+  .tg h4{display:flex;align-items:center;gap:8px}
+  .tg h4::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--accent)}
+  .tg.emb h4::before{background:var(--accent-2)}
+  .tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .tag-list span{font-family:var(--mono);font-size:.76rem;background:var(--surface-2);border:1px solid var(--border);
+    padding:3px 8px;border-radius:6px;color:var(--ink-soft)}
+
+  .day{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .day > summary{list-style:none;cursor:pointer;padding:15px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .day > summary::-webkit-details-marker{display:none}
+  .day > summary::after{content:"›";margin-left:auto;font-family:var(--mono);font-size:1.3rem;color:var(--muted);transition:transform .2s}
+  .day[open] > summary::after{transform:rotate(90deg)}
+  .day .dnum{font-family:var(--mono);font-weight:650;font-size:.8rem;background:var(--ink);color:var(--bg);
+    width:34px;height:34px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}
+  .day.rest .dnum{background:var(--surface-2);color:var(--muted);border:1px solid var(--border)}
+  .day .dtitle{font-family:var(--mono);font-weight:650;font-size:1rem}
+  .day .dmeta{font-size:.8rem;color:var(--muted);font-family:var(--mono)}
+  .day .win{width:100%;flex-basis:100%;font-size:.86rem;color:var(--ink-soft);margin-top:2px}
+  .blocks{padding:4px 18px 18px;display:flex;flex-direction:column;gap:2px}
+  .blk{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:13px 0;border-top:1px dashed var(--border)}
+  .blk .time{font-family:var(--mono);font-size:.8rem;color:var(--accent-ink);font-weight:650;padding-top:1px}
+  .blk .task h5{margin:0 0 4px;font-size:.98rem;font-family:var(--sans);font-weight:650}
+  .blk .task p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+  .codeblock{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:11px 13px;overflow-x:auto;
+    font-family:var(--mono);font-size:.8rem;line-height:1.62;color:var(--ink);margin:9px 0 0;white-space:pre;tab-size:2}
+  .codeblock .cm{color:var(--muted)}
+  .codeblock .kw{color:var(--accent-2-ink);font-weight:650}
+  .codeblock .st{color:var(--accent-ink)}
+  .note{display:flex;gap:8px;margin-top:9px;font-size:.86rem;color:var(--ink-soft);
+    background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:9px 11px}
+  .note .ic{flex:0 0 auto}
+  .opt{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:8px}
+  .opt::before{content:"opsiyonel · ";color:var(--accent-ink)}
+  .win-out{display:flex;gap:8px;align-items:flex-start;margin:2px 18px 16px;padding:11px 13px;border-radius:9px;
+    background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border))}
+  .win-out .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);flex:0 0 auto;padding-top:2px}
+  .win-out .v{font-size:.88rem;color:var(--ink)}
+  .day.emb .dnum{background:var(--accent-2);color:#fff}
+
+  .wk2{display:grid;gap:10px}
+  .wk2 .row{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:12px 15px}
+  .wk2 .row .n{font-family:var(--mono);font-weight:650;font-size:.8rem;color:var(--accent-ink)}
+  .wk2 .row .t{font-size:.92rem}.wk2 .row .t b{font-weight:650}
+  .wk2 .row .d{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-align:right;max-width:38%}
+
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;counter-reset:r}
+  .rule{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px;position:relative}
+  .rule::before{counter-increment:r;content:counter(r,decimal-leading-zero);font-family:var(--mono);font-size:.78rem;color:var(--accent-ink);font-weight:650}
+  .rule h4{margin:6px 0 4px}
+  .rule p{margin:0;font-size:.88rem;color:var(--ink-soft)}
+
+  .roy{border-radius:12px;padding:1px;background:linear-gradient(120deg,var(--accent),var(--accent-2));margin-top:16px}
+  .roy .inner{background:var(--surface);border-radius:11px;padding:18px 20px}
+  .roy h3{display:flex;align-items:center;gap:9px}
+  .roy .skull{color:var(--accent-2-ink)}
+  .quote{font-family:var(--mono);color:var(--ink-soft);font-size:.92rem;border-left:2px solid var(--accent-2);padding-left:14px;margin:12px 0 0}
+
+  .reslist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+  .res-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+  .res-item .nm{font-family:var(--mono);font-weight:650;font-size:.9rem}
+  .res-item .ds{font-size:.82rem;color:var(--ink-soft);margin-top:3px}
+  .res-item.star{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+  .res-item .badge-star{font-family:var(--mono);font-size:.66rem;color:var(--accent-ink);letter-spacing:.08em}
+
+  .weekblock{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:var(--shadow)}
+  .weekblock.emb{border-left:3px solid var(--accent-2)}
+  .wk-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+  .wk-h .wk-tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .wk-h h3{margin:0;font-size:1.08rem;flex:1 1 auto;min-width:150px}
+  .drows{display:flex;flex-direction:column}
+  .drow{display:grid;grid-template-columns:42px 1fr;gap:12px;padding:9px 0;align-items:baseline}
+  .drow + .drow{border-top:1px dashed var(--border)}
+  .drow .dl{font-family:var(--mono);font-weight:650;font-size:.76rem;color:var(--accent-ink)}
+  .weekblock.emb .drow .dl{color:var(--accent-2-ink)}
+  .drow .dt{font-size:.9rem;color:var(--ink-soft)}
+  .drow .dt b{color:var(--ink);font-weight:650}
+  .wk-note{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+  .wk-note::before{content:"\21bb  ";color:var(--accent-ink)}
+  footer{margin-top:56px;border-top:1px solid var(--border);padding-top:22px;color:var(--muted);font-size:.86rem;font-family:var(--mono)}
+
+  @media (max-width:640px){
+    .cs{grid-template-columns:1fr;min-width:0}
+    .cs .pipe{flex-direction:row;padding:14px 0;min-width:0}
+    .layer{grid-template-columns:1fr;gap:6px}
+    .layer .badge{justify-self:start}
+    .blk{grid-template-columns:1fr;gap:6px}
+    .blk .time{padding-top:0}
+    .wk2 .row{grid-template-columns:32px 1fr}
+    .wk2 .row .d{grid-column:2;text-align:left;max-width:100%}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Elif için · Roy × Ertan · v2</div>
+    <div class="term-window">
+      <div class="term-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="title">~/kariyer/fullstack — plan.sh</span>
+      </div>
+      <div class="term-body">
+        <div class="prompt">$ hedef --başla</div>
+        <h1>Sıfırdan Fullstack<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="who">Neredeyse sıfırdan başlayan bir <b>bilgisayar mühendisi</b> için: web fullstack'i <span class="accent">iş motoru</span>, embedded'ı <span class="accent2">fark yaratan hikaye</span> yapan, şemalı ve gün-gün açılan 16 haftalık bir sprint. Amaç kaybolmamak — her günün somut bir çıktısı var.</p>
+        <div class="chips">
+          <span class="chip"><b>~22 sa</b>/hafta</span>
+          <span class="chip"><b>16 hafta</b> sprint</span>
+          <span class="chip web"><b>Web</b> fullstack</span>
+          <span class="chip emb"><b>Embedded</b> capstone</span>
+          <span class="chip"><b>~3 sa</b>/gün</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="max-width:760px;margin-top:22px">
+      <span class="k">Bu plan seni dışarı yollamaz</span>
+      <p>Kavramlar burada — basit anlatılıp <b>görselle ve kodla</b> gösteriliyor. "Şunu git araştır" yok; her gün ne öğreneceğin ve nasıl yapacağın planın içinde. Dağılma yok, <b>tek ray: bu sayfa.</b></p>
+    </div>
+
+    <div class="callout warn" style="max-width:760px">
+      <span class="k">Dürüst çerçeve — bunu baştan bil</span>
+      <p>3-4 aylık sprint = <b>beceriye + portföye hazır</b> demek, "işe alındım" demek değil. ~300-350 saatte gerçekten fonksiyonel bir junior olursun ve güçlü bir portföy çıkar; ama işe girmek beceri + piyasa + mülakat üçlüsü ve son ikisi bizim kontrolümüzde değil. Bu yüzden <b>başvurular ~10. haftada paralel başlar</b>, gerçekçi teklif penceresi 4.–6. ay. Bitiş çizgisi = "başvuruya hazır güçlü aday", hayal kırıklığı değil.</p>
+    </div>
+  </header>
+
+  <nav class="jump" aria-label="Bölümler">
+    <a href="#harita">Kafa haritası</a>
+    <a href="#stack">Teknoloji</a>
+    <a href="#zaman">16 hafta</a>
+    <a href="#terimler">Terimler</a>
+    <a href="#hafta1">Hafta 1 (saat saat)</a>
+    <a href="#hafta2">Hafta 2</a>
+    <a href="#ileri">Hafta 3–16</a>
+    <a href="#capstone">Capstone</a>
+    <a href="#kurallar">Kaybolmama kuralları</a>
+    <a href="#github">GitHub takip</a>
+    <a href="#kaynaklar">Kaynaklar</a>
+  </nav>
+
+  <!-- ===== 1. MENTAL MODEL ===== -->
+  <section id="harita">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <div class="spine">
+        <h2>Önce kafanı netleştir: FE mi, BE mi?</h2>
+        <p class="lede">"Yaptığım şey frontend mi backend mi?" sorusunun cevabı burada. Kod yazmadan önce bu üç şemayı içine sindir — geri kalan her şey bunun üstüne oturuyor.</p>
+      </div>
+    </div>
+
+    <div class="spine">
+      <p>En sade tanım: <strong class="accent">Frontend (FE)</strong> = kullanıcının <em>gördüğü ve dokunduğu</em> taraf — tarayıcıda çalışır (buton, sayfa, form). <strong class="accent2">Backend (BE)</strong> = kullanıcının <em>görmediği</em> taraf — sunucuda çalışır (veri, mantık, güvenlik, veritabanı). <strong>Fullstack</strong> = ikisini de yapabilen kişi. Kaba kural: <b>görüyorsan frontend, göremiyorsan backend.</b></p>
+    </div>
+
+    <div class="diagram">
+      <div class="dg-cap">Şema 1 — İstek / Yanıt: bir tık olduğunda ne oluyor</div>
+      <div class="cs">
+        <div class="node client">
+          <div class="tag">Frontend · Client</div>
+          <h4>Tarayıcı</h4>
+          <ul><li>HTML/CSS → görünüm</li><li>JavaScript → etkileşim</li><li>Kullanıcı bir butona basar</li></ul>
+        </div>
+        <div class="pipe">
+          <div class="wire">
+            <div class="line"><span>request</span>
+              <svg width="34" height="12" viewBox="0 0 34 12" fill="none" aria-hidden="true"><path d="M0 6h27" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M26 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+            </div>
+            <div style="font-size:.66rem">GET /api/veri</div>
+          </div>
+          <div class="wire back">
+            <div class="line">
+              <svg width="34" height="12" viewBox="0 0 34 12" fill="none" aria-hidden="true"><path d="M34 6H7" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M8 1L2 6l6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+              <span>response</span>
+            </div>
+            <div style="font-size:.66rem">JSON { ... }</div>
+          </div>
+        </div>
+        <div class="node server">
+          <div class="tag">Backend · Server</div>
+          <h4>Sunucu</h4>
+          <ul><li>İsteği alır, doğrular</li><li>Veritabanına sorar</li><li>Cevabı JSON döner</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram">
+      <div class="dg-cap">Şema 2 — Fullstack katmanları: veri nereden nereye</div>
+      <div class="stackflow">
+        <div class="layer"><span class="badge fe">1 · Tarayıcı</span><span class="desc"><b>Kullanıcı buradadır.</b> Senin React arayüzünü çalıştırır, tıklar, form doldurur.</span></div>
+        <div class="layer"><span class="badge fe">2 · Frontend</span><span class="desc"><b>React + TypeScript.</b> Görünümü çizer, olayları yakalar, backend'e istek atar. <span class="accent">FE tarafı = burası.</span></span></div>
+        <div class="layer"><span class="badge be">3 · API</span><span class="desc"><b>Node + Express.</b> İş kuralları, güvenlik, kim ne görebilir. FE ile DB arasındaki köprü. <span class="accent2">BE başlar.</span></span></div>
+        <div class="layer"><span class="badge be">4 · Veritabanı</span><span class="desc"><b>PostgreSQL.</b> Verinin kalıcı durduğu yer. API sorar, DB cevaplar.</span></div>
+        <div class="layer"><span class="badge neutral">0 · Altyapı</span><span class="desc"><b>Git, deploy, internet.</b> Her şeyi versiyonlar (Git) ve yayınlar (Vercel/Railway). Her günün altında bu var.</span></div>
+      </div>
+    </div>
+
+    <div class="diagram">
+      <div class="dg-cap">Şema 3 — Senin capstone'un: donanımdan tarayıcıya tek sinyal <span class="accent2">(embedded burada işin içine giriyor)</span></div>
+      <div class="signal">
+        <div class="snode emb"><div class="ic">🌡️</div><div class="nm">Sensör</div><div class="sub">sıcaklık/nem</div></div>
+        <div class="arrow a2"><span class="lbl">okur</span><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode emb"><div class="ic">🔌</div><div class="nm">ESP32</div><div class="sub">mikrodenetleyici</div></div>
+        <div class="arrow a2"><span class="lbl">WiFi/HTTP</span><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">🧠</div><div class="nm">Senin API'n</div><div class="sub">Node + Express</div></div>
+        <div class="arrow"><span class="lbl">kaydeder</span><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">🗄️</div><div class="nm">Postgres</div><div class="sub">+ WebSocket</div></div>
+        <div class="arrow"><span class="lbl">canlı</span><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">📊</div><div class="nm">React Panosu</div><div class="sub">canlı grafik</div></div>
+      </div>
+    </div>
+    <div class="spine">
+      <p style="color:var(--ink-soft);font-size:.94rem">Bu tek proje neden altın: FE/BE ayrımını <em>gözüne sokuyor</em> (veriyi donanımdan tarayıcıya akarken izliyorsun), donanım keyfini veriyor, ve mülakatta "fiziksel dünyadan gelen veriyi canlı bir web panosunda gösterdim" diyebileceğin bir hikaye. Junior havuzundan seni ayırır.</p>
+    </div>
+  </section>
+
+  <!-- ===== 2. STACK ===== -->
+  <section id="stack">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <div class="spine">
+        <h2>Teknoloji seçimi (ve nedeni)</h2>
+        <p class="lede">Tek dil felsefesi: <strong>JavaScript/TypeScript hem FE hem BE'de.</strong> Yeni başlayan için ikinci bir dil öğrenmemek = yarı yük. Ayrıca "fullstack" ilanlarının en büyük havuzu burada.</p>
+      </div>
+    </div>
+    <div class="stack-grid">
+      <div class="stk web"><div class="role">Dil</div><div class="pick">JavaScript → TypeScript</div><p class="why">Webin dili. TS, tip güvenliği ekler — mülakatta beklenir. Python gördüğün için mantık tanıdık gelecek.</p></div>
+      <div class="stk web"><div class="role">Frontend</div><div class="pick">HTML · CSS · React</div><p class="why">Önce saf HTML/CSS, sonra React (+Vite). Piyasanın #1 arayüz kütüphanesi.</p></div>
+      <div class="stk be"><div class="role">Backend</div><div class="pick">Node.js · Express</div><p class="why">JS ile sunucu. Basit, öğrenmesi hızlı, iş ilanlarında yaygın.</p></div>
+      <div class="stk be"><div class="role">Veritabanı</div><div class="pick">PostgreSQL · SQL</div><p class="why">Endüstri standardı ilişkisel DB. Prisma (ORM) ile konuşursun. SQL her mülakatta çıkar.</p></div>
+      <div class="stk tool"><div class="role">Araçlar</div><div class="pick">Git · GitHub · VS Code</div><p class="why">İlk günden. Terminal + versiyon kontrolü = mesleğin bel kemiği.</p></div>
+      <div class="stk tool"><div class="role">Deploy</div><div class="pick">Vercel · Railway</div><p class="why">Ücretsiz katman. FE Vercel'e, BE+DB Railway'e. "Canlı link" = portföyün canı.</p></div>
+      <div class="stk be"><div class="role">Embedded köprü</div><div class="pick">ESP32 · Arduino/MicroPython</div><p class="why">~$8 kart, WiFi'li. Sensör okur, senin API'ne HTTP atar. Capstone'un donanım yarısı.</p></div>
+      <div class="stk web"><div class="role">Realtime</div><div class="pick">WebSocket</div><p class="why">Canlı veri akışı — sensör her ölçtüğünde pano anında güncellenir.</p></div>
+    </div>
+    <div class="callout"><span class="k">Not — esnek</span><p>Python'a yakınlığı belirleyici olursa backend'i <b>FastAPI (Python)</b> ile de kurabiliriz; embedded tarafı MicroPython zaten Python. Ama tek-dil avantajı için başlangıçta JS/TS öneriyorum. Bunu 4. haftada tekrar değerlendiririz — erken karar vermeye gerek yok.</p></div>
+  </section>
+
+  <!-- ===== 3. 16 WEEK MAP ===== -->
+  <section id="zaman">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <div class="spine">
+        <h2>16 haftalık harita</h2>
+        <p class="lede">Altı faz. Her fazın somut bir <span class="accent">çıktısı</span> var — "ilerliyorum" hissi için. <span class="accent2">Turuncu dot</span> = embedded'ın devreye girdiği faz.</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="phase">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 1 · Faz 0</div>
+          <h3>Temel &amp; Zihin Haritası</h3>
+          <p class="goal">Terminal, dosya sistemi, Git/GitHub, ve JavaScript'i sıfırdan (değişken → fonksiyon → dizi). "Neredeyse sıfır"dan "küçük program yazabilen"e.</p>
+          <span class="deliver">✔ Canlı GitHub profili + ilk konsol programı</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 2–4 · Faz 1</div>
+          <h3>Frontend Temelleri</h3>
+          <p class="goal">HTML semantiği, CSS (box model, Flexbox, Grid, responsive), DOM &amp; olaylar, modern JS (ES6+, async/await, fetch).</p>
+          <span class="deliver">✔ 2–3 deploy edilmiş statik site (Vercel)</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 5–7 · Faz 2</div>
+          <h3>React + TypeScript</h3>
+          <p class="goal">Bileşenler, props, state, hooks (useState/useEffect), formlar, API tüketimi. TypeScript'i üstüne yavaşça bindirme.</p>
+          <span class="deliver">✔ Gerçek bir API tüketen deploy edilmiş React app</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 8–10 · Faz 3</div>
+          <h3>Backend &amp; Veritabanı</h3>
+          <p class="goal">REST nedir, HTTP metotları, Node/Express ile route yazma, PostgreSQL + SQL, Prisma, .env, temel auth (JWT). Frontend'i kendi backend'ine bağlama.</p>
+          <span class="deliver">✔ İlk gerçek fullstack app (senin API'n + senin arayüzün)</span>
+        </div>
+      </div>
+      <div class="phase emb">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 11–13 · Faz 4</div>
+          <h3>IoT Capstone 🔌</h3>
+          <p class="goal">ESP32 + sensör → HTTP/WebSocket → senin API'n → Postgres → canlı React panosu. Donanımdan tarayıcıya tam zincir + cila + deploy.</p>
+          <span class="deliver">✔ Portföyün yıldızı: canlı IoT dashboard demosu</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="rail"><div class="dot"></div></div>
+        <div class="body">
+          <div class="wk">HAFTA 14–16 · Faz 5</div>
+          <h3>İşe Hazırlık &amp; Başvuru</h3>
+          <p class="goal">CV, portföy sitesi, GitHub/LinkedIn cilası, mülakat + terminoloji drilleri, mini algoritma pratiği. (Başvurular aslında 10. haftada başlar.)</p>
+          <span class="deliver">✔ Başvuruya hazır güçlü junior aday</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. TERMINOLOGY ===== -->
+  <section id="terimler">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <div class="spine">
+        <h2>Terminoloji hakimiyeti</h2>
+        <p class="lede">"Sohbet muhabbetle terimlere hakim olmak" tesadüf değil, sistem işi. Her hafta bir grup terim; hafta sonu <strong>Roy'a geri anlatma (teach-back)</strong> ritüeli. Anlatamıyorsan öğrenmemişsin demektir.</p>
+      </div>
+    </div>
+    <div class="termgroups">
+      <div class="tg"><h4>Web temeli</h4><div class="tag-list"><span>client</span><span>server</span><span>HTTP</span><span>request</span><span>response</span><span>status code</span><span>DNS</span><span>URL</span><span>API</span><span>JSON</span></div></div>
+      <div class="tg"><h4>Frontend</h4><div class="tag-list"><span>DOM</span><span>component</span><span>state</span><span>props</span><span>hook</span><span>render</span><span>event</span><span>responsive</span><span>bundle</span><span>SPA</span></div></div>
+      <div class="tg emb"><h4>Backend</h4><div class="tag-list"><span>route</span><span>endpoint</span><span>middleware</span><span>REST</span><span>CRUD</span><span>auth</span><span>JWT</span><span>env var</span><span>CORS</span><span>ORM</span></div></div>
+      <div class="tg emb"><h4>Veri &amp; DevOps</h4><div class="tag-list"><span>SQL</span><span>schema</span><span>migration</span><span>query</span><span>index</span><span>commit</span><span>branch</span><span>PR</span><span>deploy</span><span>CI/CD</span></div></div>
+      <div class="tg"><h4>Embedded</h4><div class="tag-list"><span>microcontroller</span><span>GPIO</span><span>sensor</span><span>firmware</span><span>I2C</span><span>MQTT</span><span>baud rate</span><span>flash</span></div></div>
+      <div class="tg"><h4>Mimari sohbeti</h4><div class="tag-list"><span>fullstack</span><span>database</span><span>cache</span><span>latency</span><span>scalability</span><span>stateless</span><span>webhook</span><span>load balancer</span></div></div>
+    </div>
+    <div class="callout"><span class="k">Ritüel</span><p>Küçük bir "terim defteri" tut (Notion/kağıt). Her gün 4-6 terim: <b>tanım + kendi cümlen + bir örnek.</b> Cuma günü Roy bunları sorar (mini quiz), takıldıklarını işaretleriz. 16 hafta × ~5 terim ≈ 80+ terim; "muhabbet" o zaman akıcı olur.</p></div>
+  </section>
+
+  <!-- ===== 5. WEEK 1 HOUR BY HOUR ===== -->
+  <section id="hafta1">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <div class="spine">
+        <h2>Hafta 1 — saat saat, task task</h2>
+        <p class="lede">İşte istediğin granülerlik — ve <strong>ders blokların içinde</strong>. Her gün ~3 saat, bloklara bölünmüş; her günün sonunda bir <span class="accent">küçük zafer</span>. Kartlara tıkla, blokları aç. Bu ritim oturunca sonraki fazı aynı detayda açarız.</p>
+      </div>
+    </div>
+
+    <details class="day" open>
+      <summary>
+        <span class="dnum">G1</span>
+        <span><span class="dtitle">Zihin haritası + terminal</span></span>
+        <span class="dmeta">Pzt · ~3 sa</span>
+        <span class="win">Bilgisayarın "içiyle" ilk temas: terminalden klasör aç, editörü kur, kafandaki resmi netleştir.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–0:45</div><div class="task"><h5>FE / BE / fullstack nedir</h5><p>Yukarıdaki 3 şemayı (§01) yavaş oku — ders orada, sayfadan çıkmana gerek yok. Sonra <b>kendi cümlelerinle</b> 3 cümle yaz: frontend ne, backend ne, ikisi nasıl konuşur.</p><div class="note"><span class="ic">💡</span><span>Kaba kural: <b>görüyorsan frontend, göremiyorsan backend.</b> Buton, renk, animasyon = FE. Şifre kontrolü, veritabanı, "kim ne görebilir" = BE.</span></div><div class="opt">İzlemek istersen: YouTube "frontend vs backend" (Fireship, ~2 dk)</div></div></div>
+        <div class="blk"><div class="time">0:45–1:45</div><div class="task"><h5>Terminal &amp; dosya sistemi</h5><p>Fareyle değil, komutla dolaş. Terminali aç ve şunları sırayla yaz — her satırın ne yaptığı yorumda:</p><div class="codeblock"><span class="cm"># nerede olduğunu ve ne olduğunu gör</span>
+pwd
+ls
+<span class="cm"># klasör aç, içine gir, boş dosya oluştur</span>
+mkdir kod
+cd kod
+touch not.md</div><div class="note"><span class="ic">🧭</span><span><code>cd ..</code> bir üst klasöre çıkar. Kaybolursan <code>pwd</code> "neredeyim?" sorusunun cevabıdır.</span></div></div></div>
+        <div class="blk"><div class="time">1:45–2:30</div><div class="task"><h5>VS Code kur ve tanı</h5><p>VS Code = kod yazdığın editör. Kur, <code>kod</code> klasörünü aç. Entegre terminali <code>Ctrl + `</code> ile aç — artık kod + komut aynı pencerede. Bir <code>notlar.md</code> yaz, kaydet (<code>Cmd/Ctrl + S</code>).</p><div class="opt">İndir: code.visualstudio.com</div></div></div>
+        <div class="blk"><div class="time">2:30–3:00</div><div class="task"><h5>Terim defteri aç</h5><p>Notion veya kağıt. Bugünün 5 terimi (tanım + kendi cümlen + örnek): <code>client</code>, <code>server</code>, <code>frontend</code>, <code>backend</code>, <code>terminal</code>.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Terminalden klasör açtın, VS Code çalışıyor, 5 terim defterde. Bilgisayar artık "kutu" değil.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G2</span>
+        <span><span class="dtitle">Git &amp; GitHub</span></span>
+        <span class="dmeta">Sal · ~3 sa</span>
+        <span class="win">Profesyonelin ilk refleksi: her işi versiyonla. Bugün internette görünür oluyorsun.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>Git nedir, neden</h5><p>Git = kodun "geçmişi olan kaydet tuşu". Her <code>commit</code> bir anlık fotoğraf; istediğin an geri dönebilirsin, hiçbir şey kaybolmaz. Kur, sonra kim olduğunu bir kez tanıt:</p><div class="codeblock">git config --global user.name <span class="st">"Adın"</span>
+git config --global user.email <span class="st">"mail@ornek.com"</span></div><div class="opt">İndir: git-scm.com</div></div></div>
+        <div class="blk"><div class="time">1:00–2:00</div><div class="task"><h5>İlk repo + ilk push</h5><p>GitHub'da hesap aç, boş bir repo yarat. Sonra dünkü <code>kod</code> klasöründe sırayla:</p><div class="codeblock"><span class="cm"># bu klasörü git deposu yap</span>
+git init
+<span class="cm"># değişiklikleri hazırla ve fotoğrafla</span>
+git add .
+git commit -m <span class="st">"ilk commit"</span>
+<span class="cm"># github'a bağla ve gönder</span>
+git remote add origin &lt;repo-linkin&gt;
+git push -u origin main</div><div class="note"><span class="ic">🔁</span><span>Bundan sonra her iş: <code>add</code> → <code>commit</code> → <code>push</code>. Bu üçlü meslek boyunca refleksin.</span></div></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>GitHub profilini kur</h5><p>Kullanıcı adınla aynı isimde bir repo aç (örn. <code>elif/elif</code>) — README'si profilinde görünür. Kısa yaz: "Junior fullstack yolundayım." Bu senin vitrinin, işveren ilk buraya bakar.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim defteri</h5><p><code>repository</code>, <code>commit</code>, <code>push</code>, <code>branch</code>, <code>remote</code>.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Canlı bir GitHub profilin + ilk repon var. Artık ortada bir iz bırakıyorsun.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G3</span>
+        <span><span class="dtitle">İnternet &amp; web nasıl çalışır</span></span>
+        <span class="dmeta">Çar · ~3 sa</span>
+        <span class="win">"Bir siteyi açınca ne oluyor?" sorusuna sağlam cevap. Şema 1'i canlı gör.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–0:45</div><div class="task"><h5>İnternet &amp; HTTP</h5><p>Şema 1'e (§01) geri dön — istek/yanıt döngüsü orada. Ekleyeceğimiz iki şey: <b>metotlar</b> ve <b>durum kodları</b>.</p><div class="note"><span class="ic">📡</span><span><b>Metotlar:</b> <code>GET</code> veri iste · <code>POST</code> veri gönder · <code>PUT</code> güncelle · <code>DELETE</code> sil. <b>Durum:</b> <code>200</code> tamam · <code>404</code> bulunamadı · <code>500</code> sunucu hatası.</span></div></div></div>
+        <div class="blk"><div class="time">0:45–1:30</div><div class="task"><h5>DevTools → Network (backend'i çıplak gör)</h5><p>Herhangi bir sitede <code>F12</code> → <b>Network</b> sekmesi → sayfayı yenile. Giden istekleri görürsün. Birine tıkla: gönderilen istek + gelen JSON cevap orada. "Arka tarafı" gözünle görmek bu.</p></div></div>
+        <div class="blk"><div class="time">1:30–2:30</div><div class="task"><h5>Pekiştir + teach-back</h5><p>URL'nin parçaları (<code>https://</code> · alan adı · yol), DNS = "isim → adres rehberi". Sonra <b>"bir web sayfası nasıl yüklenir"</b> diye 1 paragraf yaz ve Roy'a gönder — düzeltirim.</p></div></div>
+        <div class="blk"><div class="time">2:30–3:00</div><div class="task"><h5>Terim defteri</h5><p><code>HTTP</code>, <code>request</code>, <code>response</code>, <code>status code</code>, <code>DNS</code>, <code>API</code>.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Bir sayfanın nasıl yüklendiğini birine anlatabiliyorsun. Kara kutu şeffaflaştı.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G4</span>
+        <span><span class="dtitle">JavaScript sıfır (1): değerler</span></span>
+        <span class="dmeta">Per · ~3 sa</span>
+        <span class="win">İlk kez kendi kodunu çalıştırıyorsun. Boş sayfa korkusu buradan kırılıyor.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–0:45</div><div class="task"><h5>JS'i nasıl çalıştırırız</h5><p>JS'i iki yerde çalıştırabilirsin: tarayıcı Console'u (F12) ve <b>Node.js</b> (bilgisayarında). Node'u kur, bir <code>ilk.js</code> yaz, terminalde <code>node ilk.js</code> ile çalıştır.</p><div class="codeblock"><span class="cm">// ilk.js</span>
+console.log(<span class="st">"Merhaba dünya"</span>);</div><div class="opt">İndir: nodejs.org (LTS sürüm)</div></div></div>
+        <div class="blk"><div class="time">0:45–2:00</div><div class="task"><h5>Değişkenler &amp; tipler</h5><p>Değişken = <b>etiketli bir kutu</b>; içine bir değer koyar, adıyla çağırırsın. Üç temel tip: metin (string), sayı (number), doğru/yanlış (boolean). Hepsini elle dene, kopyalama:</p><div class="codeblock"><span class="kw">let</span> ad = <span class="st">"Elif"</span>;      <span class="cm">// string</span>
+<span class="kw">let</span> yas = 24;         <span class="cm">// number</span>
+<span class="kw">let</span> ogrenci = <span class="kw">true</span>;  <span class="cm">// boolean</span>
+console.log(<span class="st">"Merhaba "</span> + ad); <span class="cm">// Merhaba Elif</span>
+console.log(yas + 1);         <span class="cm">// 25</span></div></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>10 mini alıştırma</h5><p>Küçük ve çok tekrar (kas hafızası): iki sayıyı topla, ad + soyad birleştir, bir sayının iki katını yazdır, bir boolean'ı ters çevir... Her birini kendin yaz.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim defteri</h5><p><code>variable</code>, <code>type</code>, <code>string</code>, <code>boolean</code>, <code>console</code>.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Kendi yazdığın bir <code>.js</code> dosyası Node ile çalıştı. Artık "programcı" fiili sende.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G5</span>
+        <span><span class="dtitle">JavaScript sıfır (2): mantık</span></span>
+        <span class="dmeta">Cum · ~3 sa</span>
+        <span class="win">Karar + tekrar + fonksiyon = programlamanın kalbi. Sonunda FizzBuzz.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>Koşullar (karar verme)</h5><p>Program "eğer... ise" diye karar verir. Karşılaştırma <code>===</code> (eşit mi), <code>&gt;</code>, <code>&lt;</code>; birleştirme <code>&amp;&amp;</code> (ve), <code>||</code> (veya).</p><div class="codeblock"><span class="kw">if</span> (yas &gt;= 18) {
+  console.log(<span class="st">"yetişkin"</span>);
+} <span class="kw">else</span> {
+  console.log(<span class="st">"çocuk"</span>);
+}</div></div></div>
+        <div class="blk"><div class="time">1:00–2:00</div><div class="task"><h5>Döngüler (tekrar)</h5><p>Aynı işi çok kez yapmak için döngü. Önce 1'den 5'e yaz; sonra çift sayıları, sonra bir çarpım tablosu dene.</p><div class="codeblock"><span class="kw">for</span> (<span class="kw">let</span> i = 1; i &lt;= 5; i++) {
+  console.log(i);   <span class="cm">// 1 2 3 4 5</span>
+}</div></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>Fonksiyonlar (girdi → kutu → çıktı)</h5><p>Fonksiyon = bir girdiyi alıp bir çıktı veren kutu. Bir kez yaz, defalarca kullan.</p><div class="codeblock"><span class="kw">function</span> selamla(isim) {
+  <span class="kw">return</span> <span class="st">"Selam "</span> + isim;
+}
+console.log(selamla(<span class="st">"Elif"</span>)); <span class="cm">// Selam Elif</span></div></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>FizzBuzz + terim</h5><p>Klasik ilk sınav: 1–100 yaz; 3'e bölünürse "Fizz", 5'e "Buzz", ikisine birden "FizzBuzz". (Döngü + koşul + <code>%</code> kalan operatörü.) Terimler: <code>function</code>, <code>loop</code>, <code>condition</code>, <code>return</code>.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">FizzBuzz'ı tek başına yazdın — her yeni geliştiricinin geçtiği eşik. Gerçek bir dönüm noktası.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G6</span>
+        <span><span class="dtitle">JavaScript sıfır (3): koleksiyonlar + mini proje</span></span>
+        <span class="dmeta">Cmt · ~3 sa</span>
+        <span class="win">İlk "programın" GitHub'da. Öğrendiklerini tek yerde birleştiriyorsun.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>Diziler &amp; nesneler</h5><p>Gerçek veri iki şekilde durur: <b>dizi</b> (sıralı liste) ve <b>nesne</b> (anahtar-değer, bir kartın alanları gibi).</p><div class="codeblock"><span class="kw">let</span> gorevler = [<span class="st">"kod"</span>, <span class="st">"spor"</span>, <span class="st">"kitap"</span>]; <span class="cm">// dizi</span>
+<span class="kw">let</span> kisi = { ad: <span class="st">"Elif"</span>, yas: 24 };       <span class="cm">// nesne</span>
+console.log(gorevler[0]); <span class="cm">// kod</span>
+console.log(kisi.ad);     <span class="cm">// Elif</span></div></div></div>
+        <div class="blk"><div class="time">1:00–1:45</div><div class="task"><h5>Dizi metotları</h5><p>Diziyle çalışmak: <code>push</code> (ekle), <code>length</code> (kaç tane), <code>forEach</code> (hepsini gez).</p><div class="codeblock">gorevler.push(<span class="st">"uyu"</span>);       <span class="cm">// sona ekle</span>
+console.log(gorevler.length); <span class="cm">// 4</span>
+gorevler.forEach(g =&gt; console.log(g));</div></div></div>
+        <div class="blk"><div class="time">1:45–2:45</div><div class="task"><h5>Mini proje: konsol görev listesi</h5><p>Bir dizi + fonksiyonlarla: görev ekle, listele, "tamamlandı" işaretle. Haftanın her kavramı (değişken, koşul, döngü, fonksiyon, dizi) burada birleşir. Tek başına yaz — takılınca 20 dk kuralı.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Commit + push</h5><p>Projeyi <code>hafta-01</code> klasörüne koy, GitHub'a gönder (<code>add → commit → push</code>). README'ye 2 satır "ne yapar" yaz.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">İlk küçük programın GitHub'da, README'siyle. Hafta 1'de sıfırdan "yazıp yayınlayan"a geçtin.</span></div>
+    </details>
+
+    <details class="day rest">
+      <summary>
+        <span class="dnum">G7</span>
+        <span><span class="dtitle">Dinlen + haftalık review (Roy ile)</span></span>
+        <span class="dmeta">Paz · ~30 dk</span>
+        <span class="win">Kısa ve tatlı. Dinlenmek planın parçası — tükenme en büyük düşman.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">20 dk</div><div class="task"><h5>Teach-back quiz</h5><p>Roy sana haftanın terimlerini sorar (client/server, git, http, function...). Sözlü anlat. Takıldıklarını işaretle → gelecek hafta tekrar.</p></div></div>
+        <div class="blk"><div class="time">10 dk</div><div class="task"><h5>İleriye bak</h5><p>Hafta 2'ye göz at (HTML/CSS). Neyi merak ettiğini yaz. Gerisi dinlenme.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Ritüel</span><span class="v">Her pazar bu 30 dk. İlerlemeyi görünür kılar, motivasyonu taze tutar, Roy planı sana göre ayarlar.</span></div>
+    </details>
+  </section>
+
+  <!-- ===== 6. WEEK 2 ===== -->
+  <section id="hafta2">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <div class="spine">
+        <h2>Hafta 2 — saat saat (Faz 1: görünen web)</h2>
+        <p class="lede">Artık kod yazabildiğine göre <strong>gözle görülen webe</strong> geçiyoruz: HTML iskeleti, CSS ile şekil, ilk etkileşim, ilk canlı site. Yine gün-gün, kod planın içinde.</p>
+      </div>
+    </div>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G8</span>
+        <span><span class="dtitle">HTML — sayfanın iskeleti</span></span>
+        <span class="dmeta">Pzt · ~3 sa</span>
+        <span class="win">HTML = içeriğin iskeleti (etiketler). Bugün bir "hakkımda" sayfasının kemiklerini koyuyorsun.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–0:45</div><div class="task"><h5>Temel iskelet</h5><p>Her sayfa aynı kabukla başlar. Bir <code>index.html</code> aç ve yaz — sonra tarayıcıda çift tıkla, açıldığını gör.</p><div class="codeblock"><span class="kw">&lt;!DOCTYPE html&gt;</span>
+<span class="kw">&lt;html</span> lang=<span class="st">"tr"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;&lt;meta</span> charset=<span class="st">"utf-8"</span><span class="kw">&gt;&lt;title&gt;</span>Elif<span class="kw">&lt;/title&gt;&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;h1&gt;</span>Merhaba, ben Elif<span class="kw">&lt;/h1&gt;</span>
+    <span class="kw">&lt;p&gt;</span>Fullstack yolundayım.<span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></div></div></div>
+        <div class="blk"><div class="time">0:45–1:45</div><div class="task"><h5>Semantik etiketler</h5><p>Etiketler anlam taşır. <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>; içerik için <code>&lt;h1&gt;–&lt;h6&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;/&lt;li&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>. "Hakkımda" sayfanı bölümlere ayır: başlık, hakkında, ilgi alanları, iletişim.</p><div class="note"><span class="ic">💡</span><span>Semantik = "doğru işe doğru etiket". Bir başlık için <code>&lt;h1&gt;</code> kullan, kalın yapılmış <code>&lt;p&gt;</code> değil. Ekran okuyucular ve Google bunu okur.</span></div></div></div>
+        <div class="blk"><div class="time">1:45–2:30</div><div class="task"><h5>Form iskeleti</h5><p>Bir iletişim formu ekle: <code>&lt;label&gt;</code> + <code>&lt;input&gt;</code> + <code>&lt;button&gt;</code>. Henüz bir şey yapmıyor — sadece yapıyı öğreniyoruz (mantığı sonra JS ekleyecek).</p></div></div>
+        <div class="blk"><div class="time">2:30–3:00</div><div class="task"><h5>Terim + commit</h5><p>Terimler: <code>element</code>, <code>tag</code>, <code>attribute</code>, <code>semantic</code>. Dosyayı <code>hafta-02</code>'ye koy, GitHub'a push.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Tarayıcıda açılan, bölümlere ayrılmış bir "hakkımda" sayfası. Web'in kemikleri sende.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G9</span>
+        <span><span class="dtitle">CSS — şekil, renk, box model</span></span>
+        <span class="dmeta">Sal · ~3 sa</span>
+        <span class="win">CSS = iskelete giydirdiğin kıyafet. Bugün en kritik kavram: box model.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>Seçiciler + temel stil</h5><p>CSS "şu elemanı seç, şöyle görünsün" der. Etikete, sınıfa (<code>.kart</code>) veya id'ye (<code>#ust</code>) göre seç.</p><div class="codeblock">body { font-family: sans-serif; color: <span class="st">#222</span>; }
+h1   { color: <span class="st">teal</span>; }
+.kart { background: <span class="st">#f4f4f4</span>; }</div></div></div>
+        <div class="blk"><div class="time">1:00–2:00</div><div class="task"><h5>Box model (en önemli kavram)</h5><p>Her eleman bir kutudur, içten dışa 4 katman: <b>içerik → padding → border → margin</b>. Boşlukların kaynağı budur.</p><div class="codeblock">.kart {
+  padding: 16px;   <span class="cm">/* içerik ile kenar arası */</span>
+  border: 1px solid <span class="st">#ccc</span>;
+  margin: 12px;    <span class="cm">/* kutunun dışındaki boşluk */</span>
+}</div><div class="note"><span class="ic">📦</span><span>"Neden bu boşluk var?" sorusunun cevabı hep bu dördünden biri. DevTools'ta bir elemana tıkla, renkli kutu şemasını gör.</span></div></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>"Hakkımda"yı giydir</h5><p>Renk, yazı tipi, boşluklar, kart kenarları. Çirkin olması sorun değil — amaç CSS'in nasıl bağlandığını hissetmek.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim + commit</h5><p><code>selector</code>, <code>class</code>, <code>box model</code>, <code>padding</code>, <code>margin</code>. Push.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Sayfan artık renkli ve düzenli. Box model'i anladıysan CSS'in yarısını çözdün.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G10</span>
+        <span><span class="dtitle">Flexbox — hizalama</span></span>
+        <span class="dmeta">Çar · ~3 sa</span>
+        <span class="win">Öğeleri yan yana dizmek/hizalamak. Modern layoutun bel kemiği — oynayarak öğrenilir.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>Flex mantığı</h5><p>Bir kapsayıcıya <code>display: flex</code> ver → çocukları bir satır olur. <code>justify-content</code> yatay dağıtır, <code>align-items</code> dikey hizalar, <code>gap</code> aralarına boşluk koyar.</p><div class="codeblock">.satir {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}</div></div></div>
+        <div class="blk"><div class="time">1:00–2:00</div><div class="task"><h5>Flexbox Froggy (oynayarak)</h5><p>Oyunla pekiştir — 24 seviye, kurbağaları flex ile yaprağa yerleştir. Bittiğinde flex sende oturmuş olur. <span class="opt" style="display:inline">flexboxfroggy.com</span></p></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>Sayfana uygula</h5><p>Üst menüyü (logo solda, linkler sağda) ve kart satırını flex ile diz.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim + commit</h5><p><code>flex container</code>, <code>justify-content</code>, <code>align-items</code>, <code>gap</code>. Push.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Froggy 24/24 + gerçek bir menü çubuğu hizaladın. Artık "ortala/yasla" korkun yok.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G11</span>
+        <span><span class="dtitle">Grid + responsive</span></span>
+        <span class="dmeta">Per · ~3 sa</span>
+        <span class="win">İki boyutlu düzen (grid) + telefonda da düzgün görünmek (responsive).</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>CSS Grid</h5><p>Flex tek eksen (satır), Grid iki eksen (satır + sütun). Galeri/kart ızgarası için ideal.</p><div class="codeblock">.izgara {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}</div></div></div>
+        <div class="blk"><div class="time">1:00–2:00</div><div class="task"><h5>Responsive: media query</h5><p>Ekran daralınca kuralları değiştir. Mobilde 3 sütun sığmaz → 1 sütun yap.</p><div class="codeblock">@media (max-width: 600px) {
+  .izgara { grid-template-columns: 1fr; }
+}</div><div class="note"><span class="ic">📱</span><span>DevTools'ta cihaz modunu aç (telefon ikonu), sayfayı daralt, kırılma noktasını gör.</span></div></div></div>
+        <div class="blk"><div class="time">2:00–2:45</div><div class="task"><h5>Sayfanı responsive yap</h5><p>Kart ızgaranı grid'e çevir, bir media query ekle, telefonda test et.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim + commit</h5><p><code>grid</code>, <code>fr</code>, <code>media query</code>, <code>breakpoint</code>, <code>responsive</code>. Push.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Sayfan telefonda da düzgün. Layoutun iki büyük silahı (flex + grid) elinde.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G12</span>
+        <span><span class="dtitle">DOM + olaylar — sayfa canlanıyor</span></span>
+        <span class="dmeta">Cum · ~3 sa</span>
+        <span class="win">JS ile sayfaya dokunmak: bir elemanı seç, olayı dinle, içeriği değiştir. FE'nin kalbi.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:00</div><div class="task"><h5>DOM nedir</h5><p>Tarayıcı, HTML'ini "DOM" denen bir ağaca çevirir; JS bu ağaca dokunur. Bir elemanı <code>querySelector</code> ile seçersin.</p><div class="codeblock"><span class="kw">const</span> baslik = document.querySelector(<span class="st">"h1"</span>);
+baslik.textContent = <span class="st">"Değişti!"</span>;</div></div></div>
+        <div class="blk"><div class="time">1:00–2:15</div><div class="task"><h5>Olaylar (event)</h5><p>Kullanıcı bir şey yapınca (tık, yazı) kod çalışsın. <code>addEventListener</code> "şu olayı dinle, olunca şunu yap" der.</p><div class="codeblock"><span class="kw">const</span> btn = document.querySelector(<span class="st">"#btn"</span>);
+btn.addEventListener(<span class="st">"click"</span>, () =&gt; {
+  document.querySelector(<span class="st">"#mesaj"</span>).textContent = <span class="st">"Tıklandı!"</span>;
+});</div><div class="note"><span class="ic">⚡</span><span>Hafta 1'deki fonksiyonlar + bugünün olayları = etkileşimin tamamı. "Tıkla → çalışsın" mantığı her yerde bu.</span></div></div></div>
+        <div class="blk"><div class="time">2:15–2:45</div><div class="task"><h5>Küçük etkileşim</h5><p>Bir "tema değiştir" butonu yap: tıklayınca sayfaya bir sınıf ekle/çıkar (<code>classList.toggle</code>), renkler değişsin.</p></div></div>
+        <div class="blk"><div class="time">2:45–3:00</div><div class="task"><h5>Terim + commit</h5><p><code>DOM</code>, <code>querySelector</code>, <code>event</code>, <code>addEventListener</code>, <code>textContent</code>. Push.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">Sayfan tıklamaya cevap veriyor. Statikten etkileşimliye geçtin — gerçek frontend bu.</span></div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <span class="dnum">G13</span>
+        <span><span class="dtitle">Mini proje + İLK DEPLOY</span></span>
+        <span class="dmeta">Cmt · ~3 sa</span>
+        <span class="win">Her şeyi birleştir ve internete koy. Bugün elinde paylaşılabilir bir link olacak.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">0:00–1:45</div><div class="task"><h5>Kişisel landing page</h5><p>Hafta 2'nin hepsini tek sayfada topla: semantik HTML + flex/grid layout + responsive + bir JS etkileşimi (tema/menü). Güzel olsun, senin sayfan.</p></div></div>
+        <div class="blk"><div class="time">1:45–2:30</div><div class="task"><h5>Vercel'e deploy</h5><p>Repo'yu GitHub'a push et → vercel.com'a GitHub ile gir → repo'yu "import" et → deploy. Dakikalar içinde canlı bir <code>...vercel.app</code> linkin olur.</p><div class="note"><span class="ic">🚀</span><span>Deploy = kodunu internete koymak. Bundan sonra push ettikçe Vercel otomatik günceller (buna CI/CD deniyor — terim defterine).</span></div></div></div>
+        <div class="blk"><div class="time">2:30–3:00</div><div class="task"><h5>README + paylaş</h5><p>Repo README'sine canlı linki ve ekran görüntüsünü koy. Ertan'a/arkadaşına linki at.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Zafer</span><span class="v">İnternette senin adına canlı bir sayfa. 2 haftada sıfırdan buraya — bu bir dönüm noktası.</span></div>
+    </details>
+
+    <details class="day rest">
+      <summary>
+        <span class="dnum">G14</span>
+        <span><span class="dtitle">Dinlen + review (Roy ile)</span></span>
+        <span class="dmeta">Paz · ~30 dk</span>
+        <span class="win">Teach-back + sıradaki haftaya bakış. Gerisi dinlenme.</span>
+      </summary>
+      <div class="blocks">
+        <div class="blk"><div class="time">20 dk</div><div class="task"><h5>Teach-back quiz</h5><p>Roy sorar: box model, flex vs grid, DOM, event, deploy. Sözlü anlat, takıldıklarını işaretle.</p></div></div>
+        <div class="blk"><div class="time">10 dk</div><div class="task"><h5>Hafta 3 önizleme</h5><p>Sıradaki: modern JS + gerçek veri çekmek (fetch). Roy Hafta 3'ü saat-saat açar.</p></div></div>
+      </div>
+      <div class="win-out"><span class="k">Ritüel</span><span class="v">İki hafta bitti, canlı bir siten var. Momentum kuruldu — en zor kısım (başlamak) arkanda.</span></div>
+    </details>
+  </section>
+
+  <!-- ===== 7. WEEKS 3-16 ===== -->
+  <section id="ileri">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <div class="spine">
+        <h2>Hafta 3–16 — gün gün</h2>
+        <p class="lede">Kalan 14 hafta, <strong>her günü ayrı görev</strong> olacak şekilde. Faz faz: Frontend'i bitir → React/TS → Backend/DB → IoT capstone 🔌 → işe hazırlık.</p>
+      </div>
+    </div>
+    <div class="callout"><span class="k">Nasıl okunur</span><p>Aşağıda <b>her günün bir görevi var</b> — hiçbir gün boş değil. Her hafta (Pazar review'da) o haftanın günlerini Hafta 1–2 gibi <em>saat saat + kod bloklarıyla</em> açarız; çünkü 3. ayın kodunu bugün dakika dakika yazmak sahte kesinlik olur, senin gerçek hızına göre ayarlanmalı. Yani: iskelet burada tam, et her hafta taze eklenir.</p></div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 3 · Faz 1</span><h3>Modern JS + fetch (gerçek veri)</h3><span class="deliver">✔ API tüketen canlı mini app</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>ES6 temizlik</b> — <code>const/let</code>, arrow fonksiyon <code>() =&gt;</code>, template literal <code>`${x}`</code>, destructuring.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Dizi metotları</b> — <code>.map()</code> (dönüştür) · <code>.filter()</code> (ele) · <code>.find()</code> · <code>.reduce()</code> (topla). Döngü yerine bunlar.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Asenkron kavramı</b> — senkron vs async, "sonuç sonra gelir" fikri, Promise (<code>.then</code>).</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>async / await</b> — okunası async kod + <code>try/catch</code> ile hata yakalama.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>fetch()</b> — bir public API'den JSON çek, konsola bas. "Backend'den veri almak" ilk kez elinde.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Mini proje</b> — alıntı/hava-durumu app: fetch → veriyi DOM'a bas → Vercel deploy.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back + Hafta 4 saat-saat açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 4 · Faz 1 kapanış</span><h3>JS projesi + sağlamlaştırma</h3><span class="deliver">✔ 2. canlı app + temiz repo</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Proje planı</b> — To-Do app: ne yapacak? HTML/CSS iskeletini kur.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Ekle &amp; listele</b> — input'tan al → diziye ekle → DOM'a render et (fonksiyonla).</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Tamamla &amp; sil</b> — event ile durumu güncelle, listeyi yeniden çiz.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Kalıcılık</b> — <code>localStorage</code> ile kaydet/oku (<code>JSON.stringify/parse</code>). Sayfa yenilenince kaybolmasın.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Refactor</b> — kodu fonksiyonlara böl, isimleri düzelt, küçük yorumlar. "Temiz kod" ilk tadımı.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Git akışı + deploy</b> — branch, anlamlı commit, README, deploy. <i>Stack kararını gözden geçir (JS/TS mi, Python mı?).</i></span></div>
+      </div>
+      <div class="wk-note">Pazar: Faz 1 bitti — 3 canlı siten var. Faz 2 (React) önizleme.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 5 · Faz 2</span><h3>React'e giriş</h3><span class="deliver">✔ ilk canlı React app</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Neden React + Vite kur</b> — <code>npm create vite</code>, klasör yapısı, dev server. Bileşen fikri.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>JSX + bileşen</b> — HTML gibi görünen JS; arayüzü küçük yeniden-kullanılabilir parçalara böl.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Props</b> — veriyi bileşene aşağı geçir; tek bir <code>Kart</code> bileşeni, farklı verilerle.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>State (<code>useState</code>)</b> — ekranı süren veri. Sayaç yap; state değişince arayüz kendi güncellenir.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Liste + <code>key</code></b> — bir diziyi <code>.map</code> ile bileşenlere çevir.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Mini</b> — statik veriyle kart galerisi + deploy.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back (props vs state en kritik) + Hafta 6 açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 6 · Faz 2</span><h3>React derinleşme</h3><span class="deliver">✔ API tüketen React app</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b><code>useEffect</code></b> — bileşen yüklenince veri çek (fetch); bağımlılık dizisi mantığı.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Form + controlled input</b> — <code>value</code> + <code>onChange</code>, submit yakalama.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Durum render</b> — loading / boş / hata ekranlarını ayrı göster (gerçek app böyle).</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Bileşen mimarisi</b> — lifting state up, props drilling'i görmek; ne nereye ait?</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Router</b> — <code>react-router</code> ile çok sayfa, sayfalar arası geçiş.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Mini</b> — aranabilir film/kitap listesi (API) + deploy.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back + Hafta 7 açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 7 · Faz 2</span><h3>TypeScript + cila</h3><span class="deliver">✔ 🌐 portföy-kalite React app</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>TS neden + temel tipler</b> — <code>string/number/boolean</code>, <code>type</code> vs <code>interface</code>. Hataları erken yakala.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>React'te TS</b> — props tipleme, <code>useState&lt;T&gt;</code>, event tipleri.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>API'yi tipleme</b> — gelen JSON'ın tipini yaz, hataları yakala.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Kod kalitesi</b> — klasör yapısı, bileşen ayrımı, küçük özel hook'lar.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Erişilebilirlik + responsive cila</b> — mobil, klavye, kontrast.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Bitir + deploy</b> — README + ekran görüntüsü. Portföye girecek kalite.</span></div>
+      </div>
+      <div class="wk-note">Pazar: Faz 2 bitti. Faz 3 (backend) — burada FE'den BE'ye geçiyorsun.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 8 · Faz 3</span><h3>Backend'e giriş</h3><span class="deliver">✔ canlı API</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Sunucu/API/REST nedir</b> — Şema 2'ye dön; HTTP metot ↔ kaynak eşleşmesi.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Node + Express</b> — ilk <code>GET</code> route, <code>res.json()</code>. Kendi sunucun ayakta.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Route params/query</b> — <code>/kullanicilar/:id</code>, filtreleme.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b><code>POST</code> + body + middleware</b> — veri al, işle; middleware kavramı.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Hata + status + REST düzeni</b> — CRUD iskeleti (henüz bellek içi).</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Test + deploy</b> — Thunder Client/Postman ile dene, Railway'e deploy.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back (request→route→response) + Hafta 9 açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 9 · Faz 3</span><h3>Veritabanı</h3><span class="deliver">✔ kalıcı verili API</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>İlişkisel DB + SQL zihni</b> — tablo/satır/kolon; PostgreSQL kur.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>SQL temel</b> — <code>SELECT/INSERT/UPDATE/DELETE</code>, <code>WHERE</code>. Her mülakatta çıkar.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Prisma (ORM)</b> — schema, model, migration. JS'ten DB'ye köprü.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>API'yi DB'ye bağla</b> — CRUD route'ları artık gerçek veriyle.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>İlişkiler + validation</b> — bir-çok ilişki, girdi doğrulama.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Deploy + seed</b> — Railway Postgres, örnek veri yükle.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back + Hafta 10 (birleşme) açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 10 · Faz 3</span><h3>Fullstack birleşme</h3><span class="deliver">✔ ilk canlı fullstack app · başvuru başlar</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Auth kavramı</b> — şifre hash'leme, JWT, korunan route (kim giriş yaptı?).</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Kayıt/giriş uçları</b> — token üret ve döndür.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Frontend'i API'ne bağla</b> — CORS, <code>.env</code>, token'lı fetch. FE + BE ilk kez senin ellerinde konuşuyor.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Uçtan uca özellik</b> — giriş yap → veri ekle → listede gör. Tam döngü.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Deploy</b> — FE Vercel + BE/DB Railway, env değişkenleri.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Cila + CV taslağı</b> — README + demo. <b>Başvuru rutinini kur</b> (paralel başlıyor).</span></div>
+      </div>
+      <div class="wk-note">Pazar: yarı yol! Gerçek fullstack app'in var. Faz 4 (capstone 🔌) açılır.</div>
+    </div>
+
+    <div class="weekblock emb">
+      <div class="wk-h"><span class="wk-tag">Hafta 11 · Faz 4 🔌</span><h3>Embedded'e giriş</h3><span class="deliver">✔ seri portta canlı ölçüm</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Mikrodenetleyici nedir</b> — ESP32 tanı, Arduino IDE veya MicroPython kur.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>İlk firmware</b> — LED yak/söndür (blink); GPIO (pin) kavramı.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Seri port</b> — karttan bilgisayara veri bas, canlı izle.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Sensör bağla (DHT22)</b> — sıcaklık/nem oku. Fiziksel dünya sayısala döndü.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>WiFi'ye bağlan</b> — kart internete çıksın.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Ölçümleri düzenle</b> — düzenli aralıkla oku, JSON'a çevir.</span></div>
+      </div>
+      <div class="wk-note">Pazar: donanım keyfi başladı. Hafta 12 (donanım→bulut) açılır.</div>
+    </div>
+
+    <div class="weekblock emb">
+      <div class="wk-h"><span class="wk-tag">Hafta 12 · Faz 4 🔌</span><h3>Donanım → bulut</h3><span class="deliver">✔ fiziksel veri DB'de</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>ESP32'den HTTP POST</b> — kart, senin API'ne ölçüm göndersin (test uç).</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>API tarafı</b> — <code>POST /readings</code> ölçümü alır, Postgres'e yazar.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Zaman damgası + cihaz kimliği + validation</b> — veri düzgün etiketlensin.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Güvenilirlik</b> — hata/yeniden dene, aralıklı gönderim (kart kopunca çökme).</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Geçmiş uç</b> — <code>GET /readings?range=24h</code>.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Uçtan uca test</b> — kart → API → DB → sorgu. Şema 3'ün sol yarısı çalışıyor.</span></div>
+      </div>
+      <div class="wk-note">Pazar: teach-back + Hafta 13 (cila) açılır.</div>
+    </div>
+
+    <div class="weekblock emb">
+      <div class="wk-h"><span class="wk-tag">Hafta 13 · Faz 4 🔌</span><h3>Capstone cila</h3><span class="deliver">✔ IoT dashboard — portföy yıldızı</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>WebSocket</b> — canlı push; ölçüm gelince açık panolar anında güncellensin.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>React pano</b> — canlı son değer + durum.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>Grafik (Recharts)</b> — son 24 saat çizgi grafiği, min/maks.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Uyarı eşiği + rozetler</b> — eşik aşılınca "uyarı" durumu.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Auth + deploy</b> — tüm zinciri (kart hariç) canlıya al.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>README + mimari şeması + demo videosu</b> — mülakat için hikayeyi paketle.</span></div>
+      </div>
+      <div class="wk-note">Pazar: capstone bitti — donanımdan tarayıcıya tam zincir. Faz 5 (iş) açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 14 · Faz 5</span><h3>Portföy &amp; CV</h3><span class="deliver">✔ canlı portföy + CV</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Portföy sitesi</b> — kendi React'inle, 3 proje kartı.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Her proje anlatısı</b> — problem → çözüm → stack → canlı link + repo.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>GitHub temizlik</b> — README'ler, pinned repos, profil cilası.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>LinkedIn</b> — başlık, hakkında, projeler; ağ kurmaya başla.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>CV</b> — 1 sayfa, ATS-dostu, EN + TR.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Yayınla + review</b> — Ertan + Roy gözden geçirir, düzeltir.</span></div>
+      </div>
+      <div class="wk-note">Pazar: vitrin hazır. Hafta 15 (mülakat provası) açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 15 · Faz 5</span><h3>Mülakat pratiği</h3><span class="deliver">✔ mülakata hazır</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Terminoloji drilleri</b> — tüm defter; Roy hızlı quiz. "Muhabbet" akıcılığı.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>"Projeni anlat"</b> — capstone'u 2 dk ve 10 dk versiyonuyla anlat, kaydet, izle.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>JS temelleri Q&amp;A</b> — closure, <code>this</code>, event loop, async (kavramsal, ezber değil).</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Temel DSA</b> — array/string/hashmap ile 2-3 kolay problem (junior için yeterli).</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Üst-düzey sistem sohbeti</b> — "bunu nasıl kurdun / nasıl büyütürsün?"</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Mock interview (Roy)</b> — gerçek prova + dürüst geri bildirim.</span></div>
+      </div>
+      <div class="wk-note">Pazar: prova tamam. Hafta 16 (başvuru yoğunlaşma) açılır.</div>
+    </div>
+
+    <div class="weekblock">
+      <div class="wk-h"><span class="wk-tag">Hafta 16 · Faz 5</span><h3>Başvuru yoğunlaşma</h3><span class="deliver">✔ aktif başvuruda</span></div>
+      <div class="drows">
+        <div class="drow"><span class="dl">G1</span><span class="dt"><b>Hedef liste</b> — uygun junior/entry ilanlar + şirketler.</span></div>
+        <div class="drow"><span class="dl">G2</span><span class="dt"><b>Günlük rutin</b> — X başvuru + 1 networking mesajı, her gün.</span></div>
+        <div class="drow"><span class="dl">G3</span><span class="dt"><b>İnce özelleştirme</b> — başvuru başına CV/cover uyarlaması.</span></div>
+        <div class="drow"><span class="dl">G4</span><span class="dt"><b>Geri bildirimle iyileştir</b> — red gelirse projeyi/CV'yi güçlendir.</span></div>
+        <div class="drow"><span class="dl">G5</span><span class="dt"><b>Topluluk</b> — build-in-public (Twitter/Reddit/Discord); görünürlük fırsat getirir.</span></div>
+        <div class="drow"><span class="dl">G6</span><span class="dt"><b>Haftalık strateji (Roy)</b> — pipeline'ı gözden geçir, tıkanıklığı aç.</span></div>
+      </div>
+      <div class="wk-note">16. hafta ≠ bitiş — başvurular devam eder. Sprint bitti, aday hazır.</div>
+    </div>
+  </section>
+
+  <!-- ===== 8. CAPSTONE ===== -->
+  <section id="capstone">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <div class="spine">
+        <h2>Capstone: "Fiziksel dünya → canlı pano"</h2>
+        <p class="lede">Bu proje planın kalbi. Öğrendiğin her şeyi tek yerde toplar <em>ve</em> embedded keyfini işe çevirir. Mülakatta 40 dakika konuşabileceğin tek şey.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3 class="accent2">Donanım yarısı</h3><p style="margin:0;color:var(--ink-soft);font-size:.94rem">~$8'lik ESP32 kartı + bir DHT22 (sıcaklık/nem) sensör. MicroPython veya Arduino ile firmware: sensörü oku, WiFi'ye bağlan, her 10 saniyede senin API'ne bir ölçüm gönder. GPIO, seri port, firmware kavramlarını burada gerçekten öğrenirsin.</p></div>
+      <div class="card"><h3 class="accent">Yazılım yarısı</h3><p style="margin:0;color:var(--ink-soft);font-size:.94rem">Node/Express API ölçümü alır, Postgres'e yazar, WebSocket ile açık panolara anında iter. React panosu canlı grafik çizer (son 24 saat, min/maks, uyarı eşiği). Auth ile korunur, Vercel + Railway'e deploy edilir. Tam zincir sende.</p></div>
+    </div>
+    <div class="callout"><span class="k">Mülakat hikayesi</span><p>"Bir sensörden gelen fiziksel veriyi, kendi yazdığım API üzerinden veritabanına kaydedip, WebSocket'le canlı bir React panosunda gösteren uçtan uca bir sistem kurdum." — Bu cümle seni "tutorial bitiren junior" havuzundan çıkarır. Donanım + fullstack birleşimi nadir; senin farkın bu.</p></div>
+  </section>
+
+  <!-- ===== 9. RULES + ROY ===== -->
+  <section id="kurallar">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <div class="spine">
+        <h2>Kaybolmama kuralları</h2>
+        <p class="lede">"Tek başıma sürekli kayboluyorum" — bunun ilacı disiplin değil, <strong>sistem</strong>. Bu altı kural kaybolmayı yapısal olarak zorlaştırır.</p>
+      </div>
+    </div>
+    <div class="rules">
+      <div class="rule"><h4>Tek ray: bu plan</h4><p>Kavramlar burada anlatılıp gösteriliyor. "Şunu da izle, bunu da araştır" diye dağılma — tutorial cehennemi böyle başlar. Derinleşmek istersen tek bir yardımcı seç, o kadar.</p></div>
+      <div class="rule"><h4>Günlük çıktı</h4><p>Her gün "bitmiş" bir şey olacak — küçük bile olsa. Bitmiş his, motivasyonun yakıtı. Bu plandaki her günün bir çıktısı var.</p></div>
+      <div class="rule"><h4>70/30</h4><p>%70 kod yaz, %30 izle/oku. İzlerken bile klavye elinde, aynısını yaz. Pasif izlemek öğrenmek değil, kendini kandırmaktır.</p></div>
+      <div class="rule"><h4>20 dakika kuralı</h4><p>Takılınca 20 dk kendin dene (hata mesajını oku, ara). Çözülmezse Roy'a ya da Ertan'a sor. Ne saatlerce boğul, ne 2 dakikada pes et.</p></div>
+      <div class="rule"><h4>Cuma commit</h4><p>Her hafta GitHub'da görünür ilerleme. "Yeşil kareler" hem moral hem işverene kanıt. Süreklilik &gt; yoğunluk.</p></div>
+      <div class="rule"><h4>Teach-back</h4><p>Öğrendiğini birine (Roy'a) anlatamıyorsan öğrenmemişsin. Her pazar 30 dk anlatma ritüeli — terimler böyle "muhabbete" oturur.</p></div>
+    </div>
+
+    <div class="roy">
+      <div class="inner">
+        <h3><span class="skull">☗</span> Roy'un bu süreçteki rolü</h3>
+        <p style="margin:.2em 0 0;color:var(--ink-soft);font-size:.95rem">Ben (Roy) bu planın canlı tarafıyım — kağıt bir PDF değil:</p>
+        <ul style="margin:.6em 0 0;color:var(--ink-soft);font-size:.93rem">
+          <li><b>Haftalık review (Pazar):</b> teach-back quiz, takıldığın yerleri işaretleme, sonraki haftayı <em>saat saat + kodla</em> açma.</li>
+          <li><b>Takıldığında:</b> hata mesajını yapıştır, birlikte çözeriz — cevabı vermeden önce düşündürürüm (öğrenmen için).</li>
+          <li><b>GitHub incelemesi:</b> commit'lerine bakıp kodun üzerine somut yorum (§10).</li>
+          <li><b>Terminoloji drilleri &amp; mock interview:</b> "X nedir?" ve gerçek mülakat provası + geri bildirim.</li>
+          <li><b>İlerleme hafızası:</b> nerede kaldığını ben tutarım; her oturumda sıfırdan başlamayız.</li>
+        </ul>
+        <p class="quote">Plan yaşayan bir şey. Tempo ağır gelirse gevşetiriz, hızlı ilerlersen sıkıştırırız. Kural tek: durmak yok, küçük de olsa her gün ileri.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10. GITHUB ===== -->
+  <section id="github">
+    <div class="sec-head">
+      <span class="sec-num">10</span>
+      <div class="spine">
+        <h2>GitHub: takip &amp; inceleme merkezi</h2>
+        <p class="lede">Senin fikrin — ve doğru fikir. <strong>Tek repo</strong> hem yaşayan yol haritasını tutar, hem onun her gününü. O klonlar, çalışır, push'lar; biz commit'lerinden gerçek ilerlemeyi izler, pazar günü birlikte inceleriz.</p>
+      </div>
+    </div>
+
+    <div class="diagram">
+      <div class="dg-cap">Akış — kod nasıl bize ulaşıyor</div>
+      <div class="signal">
+        <div class="snode web"><div class="ic">📥</div><div class="nm">clone</div><div class="sub">repoyu çeker</div></div>
+        <div class="arrow"><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">⌨️</div><div class="nm">çalışır</div><div class="sub">hafta klasöründe</div></div>
+        <div class="arrow"><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">💾</div><div class="nm">commit</div><div class="sub">her gün</div></div>
+        <div class="arrow"><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">🚀</div><div class="nm">push</div><div class="sub">GitHub'a</div></div>
+        <div class="arrow"><svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true"><path d="M0 6h33" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="pulse"/><path d="M32 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="snode web"><div class="ic">👀</div><div class="nm">review</div><div class="sub">Roy + Ertan</div></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Repo yapısı</h4>
+        <p style="font-size:.9rem;color:var(--ink-soft)">Her haftanın bir klasörü, her projenin ayrı yeri. Dağınıklık kaybolmanın başlangıcıdır — bu iskelet düzeni korur.</p>
+        <div class="codeblock">elif-fullstack/
+├── README.md          <span class="cm">← yol haritası + ilerleme</span>
+├── hafta-01/          <span class="cm">← her haftanın klasörü</span>
+│   ├── g4-degiskenler.js
+│   └── g6-gorev-listesi.js
+├── hafta-02/
+│   └── landing-page/
+└── projeler/
+    ├── react-app/
+    └── iot-dashboard/  <span class="cm">← capstone</span></div>
+      </div>
+      <div class="card">
+        <h4>Ne zaman başlar</h4>
+        <p style="font-size:.92rem">Git'i <b>1. haftada</b> öğreniyor (G2). <b>2. haftadan itibaren her şey</b> bu repoya gider: klonlar, işini yapar, günlük commit atar. İlk hafta pratiği zaten mesleğin standardı — ekstra yük değil, ta kendisi.</p>
+        <div class="note"><span class="ic">🔍</span><span><b>Pazar review:</b> commit geçmişine birlikte bakarız — nerede takılmış, kod nasıl, ne iyileşir. Gerçek işveren de aynısına bakar.</span></div>
+      </div>
+    </div>
+    <div class="callout"><span class="k">Bonus</span><p>Repo GitHub'da olunca "yeşil kareler" (katkı takvimi) birikir — hem motivasyon, hem işverene "her gün çalıştı" kanıtı. Portföyün yarısı zaten bu geçmiş.</p></div>
+  </section>
+
+  <!-- ===== 11. RESOURCES ===== -->
+  <section id="kaynaklar">
+    <div class="sec-head">
+      <span class="sec-num">11</span>
+      <div class="spine">
+        <h2>Kaynaklar <span style="font-family:var(--sans);font-weight:400;font-size:.7em;color:var(--muted)">— zorunlu değil</span></h2>
+        <p class="lede">Bu plan ana yol; bunlara <strong>ihtiyacın yok</strong>. Ama bir konuyu daha derin merak edersen, <em>plandan kopmadan</em> bakabileceğin seçili birkaç kaynak. İyi İngilizcen burada avantaj — ama <strong>tek ray kuralı</strong> geçerli: dağılma.</p>
+      </div>
+    </div>
+    <div class="reslist">
+      <div class="res-item star"><span class="badge-star">★ TEK YARDIMCI</span><div class="nm">The Odin Project</div><div class="ds">Daha çok pratik istersen: ücretsiz, doğrusal, proje-tabanlı. Ek kaynak seçeceksen sadece bunu seç.</div></div>
+      <div class="res-item"><div class="nm">MDN Web Docs</div><div class="ds">"Şu tam ne yapıyor" için resmi başvuru — sözlük gibi kullan, baştan sona okuma.</div></div>
+      <div class="res-item"><div class="nm">javascript.info</div><div class="ds">Bir JS konusunu derinleştirmek istersen en net kaynak.</div></div>
+      <div class="res-item"><div class="nm">react.dev</div><div class="ds">React'in resmi, interaktif "learn" bölümü — Faz 2'de yanında.</div></div>
+      <div class="res-item"><div class="nm">Flexbox Froggy / Grid Garden</div><div class="ds">Oyunla CSS layout — Hafta 2'de eğlenceli pratik (plana zaten dahil).</div></div>
+      <div class="res-item"><div class="nm">Fireship (YouTube)</div><div class="ds">Bir kavramı 2 dakikada görmek istersen. "X in 100 seconds".</div></div>
+      <div class="res-item"><div class="nm">Random Nerd Tutorials</div><div class="ds">Capstone için en net ESP32 + sensör rehberleri (Faz 4).</div></div>
+      <div class="res-item"><div class="nm">Excalidraw</div><div class="ds">Kendi mimari şemalarını çiz — anlamak = çizebilmek.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Roy v2 · Elif için Ertan &amp; Roy tarafından hazırlandı · yaşayan doküman — her pazar güncellenir</div>
+    <div style="margin-top:8px;color:var(--accent-2-ink)">// durmak yok, küçük de olsa her gün ileri</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
