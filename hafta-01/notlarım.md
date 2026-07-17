@@ -1,0 +1,1 @@
+Bugün terminalden github'a giriş yapmayı öğrendim. Daha sonra githubta var olan projeyi clone'ladım. Şimdi de bugün öğrendiklerimi yazıyorum. 
