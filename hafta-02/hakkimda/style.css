@@ -1,0 +1,80 @@
+*{
+  box-sizing: border-box;
+  /* box-sizing: border-box; ile padding ve border'ı da width ve height'e dahil edebilirsin */
+}
+
+
+header {
+    background-color: hsl(249, 15%, 91%);
+    
+    color: hsl(0, 0%, 13%);
+    
+    padding: 1rem;
+    
+}
+
+h1{
+    color: white
+}
+h1:hover{
+    color: hsl(324, 90%, 73%);
+}
+p{
+    color: white
+}
+nav a{
+    color: white
+}
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  
+  color: hwb(0 0% 100%);
+  
+  line-height: 1.6;
+  
+  margin: 0;
+  
+  background-color: hwb(0 12% 38%);
+
+  background-image: url(shrek.jpeg);
+
+  background-size: cover;   
+
+  background-position: center; 
+}
+
+header h1 {
+    font-size: 2rem;
+
+    color: hsl(252, 69%, 23%);
+    
+    margin: 0;
+}
+nav ul {
+  list-style: none;
+  /* list-style: none → li'lerin başındaki noktaları kaldırır */
+  padding: 0;
+  margin: 0;
+}
+
+
+section {
+  max-width: 700px;
+  margin: 32px auto;
+  /* margin: 32px auto → üst-alt 32px, sağ-sol "auto" = ortala */
+  padding: 0 20px;
+}
+
+img {
+  max-width: 200px;
+  border-radius: 50%;
+  /* %50 border-radius + eşit width/height = tam daire */
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-size: 14px;
+}
+
