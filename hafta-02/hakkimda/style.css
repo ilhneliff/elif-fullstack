@@ -4,13 +4,32 @@
 }
 
 .container {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
 
-    align-items: center;
-
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  
     gap: 16px;
+    gap: 16px;
+}
 
+.kart-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.kart {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* box-shadow: x-offset y-offset blur renk — hafif bir "yükselti" hissi verir */
+}
+
+.kart h3 {
+  margin-top: 0;
+  color: #2c3e50;
 }
 
 header {
@@ -133,4 +152,28 @@ form button {
 
 form button:hover {
   background-color: #1a252f;
+}
+
+/* Varsayılan (masaüstü) stiller yukarıda zaten yazıldı.
+   @media bloğu, SADECE koşul sağlandığında devreye girer ve önceki kuralları EZER. */
+
+@media (max-width: 600px) {
+  /* ekran genişliği 600px veya daha az olduğunda bu blok aktif olur */
+
+  header {
+    flex-direction: column;
+    /* mobilde isim ve menü yan yana değil, alt alta */
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  section {
+    padding: 0 12px;
+    /* mobilde kenar boşluğunu azalt, içerik kenara yapışmasın ama fazla yer kaplamasın */
+  }
+
+  .kart-izgara {
+    grid-template-columns: 1fr;
+    /* mobilde tek sütun — kartlar alt alta */
+  }
 }
