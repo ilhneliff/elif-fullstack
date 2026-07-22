@@ -7,29 +7,29 @@
     display: grid;
 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  
+
     gap: 16px;
     gap: 16px;
 }
 
 .kart-izgara {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
 }
 
 .kart {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  /* box-shadow: x-offset y-offset blur renk — hafif bir "yükselti" hissi verir */
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: x-offset y-offset blur renk — hafif bir "yükselti" hissi verir */
 }
 
 .kart h3 {
-  margin-top: 0;
-  color: #2c3e50;
+    margin-top: 0;
+    color: #2c3e50;
 }
 
 header {
@@ -49,7 +49,7 @@ header {
 }
 
 h1 {
-    color: white
+    color: black
 }
 
 h1:hover {
@@ -57,11 +57,11 @@ h1:hover {
 }
 
 p {
-    color: white
+    color: black
 }
 
 nav a {
-    color: white
+    color: black
 }
 
 body {
@@ -73,9 +73,8 @@ body {
 
     margin: 0;
 
-    background-color: hwb(0 12% 38%);
+    background-color: hwb(135 2% 69%);
 
-    background-image: url(shrek.jpeg);
 
     background-size: cover;
 
@@ -85,7 +84,7 @@ body {
 header h1 {
     font-size: 2rem;
 
-    
+
 
     margin: 0;
 
@@ -122,58 +121,100 @@ footer {
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  /* flex-direction: column → ana eksen dikey olur, elemanlar alt alta dizilir */
-  gap: 12px;
-  max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: column → ana eksen dikey olur, elemanlar alt alta dizilir */
+    gap: 12px;
+    max-width: 400px;
 }
 
 form input,
 form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: inherit;
-  /* inherit: body'deki fontu miras al, tarayıcı varsayılanını kullanma */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    /* inherit: body'deki fontu miras al, tarayıcı varsayılanını kullanma */
 }
 
 form button {
-  padding: 10px 20px;
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  /* cursor: pointer → üzerine gelince el işareti, "buna tıklanır" sinyali verir */
-  align-self: flex-start;
-  /* align-self: bu TEK elemanı, kabın align-items kuralından bağımsız hizalar */
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    /* cursor: pointer → üzerine gelince el işareti, "buna tıklanır" sinyali verir */
+    align-self: flex-start;
+    /* align-self: bu TEK elemanı, kabın align-items kuralından bağımsız hizalar */
 }
 
 form button:hover {
-  background-color: #1a252f;
+    background-color: #1a252f;
 }
 
 /* Varsayılan (masaüstü) stiller yukarıda zaten yazıldı.
    @media bloğu, SADECE koşul sağlandığında devreye girer ve önceki kuralları EZER. */
 
 @media (max-width: 600px) {
-  /* ekran genişliği 600px veya daha az olduğunda bu blok aktif olur */
+    /* ekran genişliği 600px veya daha az olduğunda bu blok aktif olur */
 
-  header {
-    flex-direction: column;
-    /* mobilde isim ve menü yan yana değil, alt alta */
-    align-items: flex-start;
-    gap: 12px;
-  }
+    header {
+        flex-direction: column;
+        /* mobilde isim ve menü yan yana değil, alt alta */
+        align-items: flex-start;
+        gap: 12px;
+    }
 
-  section {
-    padding: 0 12px;
-    /* mobilde kenar boşluğunu azalt, içerik kenara yapışmasın ama fazla yer kaplamasın */
-  }
+    section {
+        padding: 0 12px;
+        /* mobilde kenar boşluğunu azalt, içerik kenara yapışmasın ama fazla yer kaplamasın */
+    }
 
-  .kart-izgara {
-    grid-template-columns: 1fr;
-    /* mobilde tek sütun — kartlar alt alta */
-  }
+    .kart-izgara {
+        grid-template-columns: 1fr;
+        /* mobilde tek sütun — kartlar alt alta */
+    }
+}
+
+body.koyu-tema {
+    /* body.koyu-tema: body'de HEM "koyu-tema" class'ı VARSA bu kural uygulanır */
+    background-color: #1a1a1a;
+    color: #eee;
+}
+
+body.koyu-tema header {
+    background-color: #000;
+    color: white
+}
+
+body.koyu-tema .kart {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #eee;
+}
+
+body.koyu-tema h1 {
+    color: white;
+}
+
+header.koyu-tema p1 {
+    color: white;
+}
+
+body.koyu-tema nav a {
+    color: white;
+}
+
+body.koyu-tema p {
+    color: white;
+}
+
+#tema-buton {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
 }
