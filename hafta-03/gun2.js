@@ -41,3 +41,4 @@ const sonuc = [4, 8, 15, 16, 23, 42]
   .reduce((toplam, sayi) => toplam + sayi, 0); 
 
 console.log(sonuc); // 140
+

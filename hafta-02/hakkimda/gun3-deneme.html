@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Flexbox deneme</title>
+  <style>
+    .kutu {
+      display: flex;
+      justify-content: center;   /* bunu değiştir: flex-start, space-between, space-around dene */
+      align-items: center;       /* bunu değiştir: flex-start, flex-end dene */
+      gap: 100px;
+      height: 400px;
+      background: #eee;
+      border: 2px dashed #531d1d;
+    }
+    .kutu div {
+      background: dodgerblue;
+      color: rgb(13, 21, 43);
+      padding: 16px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="kutu">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </div>
+</body>
+</html>
