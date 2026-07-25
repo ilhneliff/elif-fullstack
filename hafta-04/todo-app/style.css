@@ -30,13 +30,13 @@ body {
 h1 {
     font-family: "Nabla", system-ui;
     font-optical-sizing: auto;
-    font-weight: 600;
+    font-weight: 800;
     font-style: normal;
     font-variation-settings:
         "EDPT" 100,
         "EHLT" 12;
     margin-top: 0;
-    font-size: 22px;
+    font-size: 30px;
 }
 
 #gorev-form {
@@ -87,8 +87,28 @@ h1 {
     justify-content: space-between;
 }
 
-#gorev-listesi li.tamamlandi {
+#gorev-listesi li .tamamlandi {
     text-decoration: line-through;
 
     color: #aaa;
+}
+
+.mini-buton {
+    border: none;
+    background: #eee;
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    margin-left: 6px;
+    font-size: 13px;
+}
+
+.tamamla-buton:hover {
+    background: #55efc4;
+}
+
+.sil-buton:hover {
+    background: #ff7675;
+    color: white;
 }
