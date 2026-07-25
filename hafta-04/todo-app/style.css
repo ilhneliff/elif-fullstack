@@ -3,9 +3,7 @@
 }
 
 
-
 body {
-
 
     background: #252627;
     display: flex;
@@ -15,14 +13,11 @@ body {
     min-height: 100vh;
 }
 
+
 .kutu {
-    font-family: "Nabla", system-ui;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-variation-settings:
-        "EDPT" 100,
-        "EHLT" 12;
+    font-family: monospace;
+    font-weight: 400;
+    font-style: oblique;
     background: rgb(147, 141, 141);
     padding: 50px;
     border-radius: 12px;
@@ -33,6 +28,13 @@ body {
 }
 
 h1 {
+    font-family: "Nabla", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+        "EDPT" 100,
+        "EHLT" 12;
     margin-top: 0;
     font-size: 22px;
 }
@@ -72,7 +74,21 @@ h1 {
 }
 
 #bos-mesaj {
-    color: #999;
+    color: #1e1d1d;
     text-align: center;
     font-size: 14px;
+}
+
+#gorev-listesi li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#gorev-listesi li.tamamlandi {
+    text-decoration: line-through;
+
+    color: #aaa;
 }
