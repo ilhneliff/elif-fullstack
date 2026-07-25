@@ -2,9 +2,12 @@
     box-sizing: border-box;
 }
 
+
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f5f6fa;
+
+
+    background: #252627;
     display: flex;
     justify-content: center;
     padding-top: 40px;
@@ -13,13 +16,20 @@ body {
 }
 
 .kutu {
-    background: white;
-    padding: 24px;
+    font-family: "Nabla", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+        "EDPT" 100,
+        "EHLT" 12;
+    background: rgb(147, 141, 141);
+    padding: 50px;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 12px rgba(65, 16, 33, 0.536);
     width: 100%;
-    max-width: 420px;
-    height: fit-content;
+    max-width: 600px;
+    height: 100%;
 }
 
 h1 {
@@ -66,4 +76,3 @@ h1 {
     text-align: center;
     font-size: 14px;
 }
-
